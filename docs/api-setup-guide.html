@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Setup Guide - Ouroboros</title>
+    <meta name="description" content="How to set up API keys for Ouroboros">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+        
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        
+        .step {
+            background: #f5f5f5;
+            padding: 1em;
+            margin: 1em 0;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .code {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 1em;
+            border-radius: 5px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            margin: 1em 0;
+        }
+        
+        .note {
+            background: #e3f2fd;
+            padding: 1em;
+            border-left: 4px solid #2196F3;
+            margin: 1em 0;
+        }
+        
+        .warning {
+            background: #fff3e0;
+            padding: 1em;
+            border-left: 4px solid #FF9800;
+            margin: 1em 0;
+        }
+        
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        
+        li {
+            margin: 0.5em 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Setup Guide - Ouroboros</h1>
+    
+    <p><strong>Версия документа:</strong> 1.0</p>
+    
+    <h2>Что нужно настроить</h2>
+    
+    <p>Ouroboros требует два API ключа для работы:</p>
+    
+    <ol>
+        <li><strong>Telegram Bot Token</strong> - для общения с пользователем</li>
+        <li><strong>OpenRouter API Key</strong> - для доступа к LLM моделям</li>
+    </ol>
+    
+    <h2>Настройка Telegram Bot Token</h2>
+    
+    <h3>Шаг 1: Создание бота в Telegram</h3>
+    
+    <div class="step">
+        <h4>1. Найдите @BotFather</h4>
+        <p>Откройте Telegram и найдите пользователя <strong>@BotFather</strong>.</p>
+        <p>Это официальный бот для создания и управления другими ботами.</p>
+    </div>
+    
+    <div class="step">
+        <h4>2. Создайте нового бота</h4>
+        <div class="code">
+            /start
+            /newbot
+        </div>
+        <p>BotFather попросит вас:</p>
+        <ul>
+            <li>Дать имя боту (например "Ouroboros")</li>
+            <li>Дать юзернейм боту (должен заканчиваться на "bot", например "OuroborosBot")</li>
+        </ul>
+    </div>
+    
+    <div class="step">
+        <h4>3. Скопируйте API токен</h4>
+        <p>После создания бота BotFather предоставит вам API токен вида:</p>
+        <div class="code">
+            123456789:ABCdefGHIjklMNOPQRstUVwxyz_123456
+        </div>
+        <p><strong>Сохраните этот токен</strong> - он понадобится для настройки.</p>
+    </div>
+    
+    <h3>Шаг 2: Настройка бота</h3>
+    
+    <div class="step">
+        <h4>1. Добавьте описание и изображение</h4>
+        <div class="code">
+            /setdescription
+            /setuserpic
+        </div>
+        <p>Это необязательно, но рекомендуется для идентификации бота.</p>
+    </div>
+    
+    <div class="step">
+        <h4>2. Настройте команды</h4>
+        <div class="code">
+            /setcommands
+        </div>
+        <p>Добавьте стандартные команды:</p>
+        <pre><code>/start - Запустить бота
+/help - Помощь
+/status - Статус системы
+/bg - Управление фоновым режимом</code></pre>
+    </div>
+    
+    <h2>Настройка OpenRouter API Key</h2>
+    
+    <h3>Шаг 1: Регистрация на OpenRouter</h3>
+    
+    <div class="step">
+        <p>Перейдите на <a href="https://openrouter.ai" target="_blank">OpenRouter</a> и создайте аккаунт.</p>
+        <p>OpenRouter предоставляет доступ к множеству LLM моделей по конкурентным ценам.</p>
+    </div>
+    
+    <h3>Шаг 2: Получение API ключа</h3>
+    
+    <div class="step">
+        <ol>
+            <li>Войдите в свой аккаунт</li>
+            <li>Перейдите в раздел "API Keys"</li>
+            <li>Нажмите "Create API Key"</li>
+            <li>Дайте ключу название (например "Ouroboros")</li>
+            <li>Скопируйте сгенерированный API ключ</li>
+        </ol>
+        
+        <p>API ключ будет выглядеть примерно так:</p>
+        <div class="code">
+            sk-1234567890abcdefghijklmnopqrstuv
+        </div>
+    </div>
+    
+    <h3>Шаг 3: Пополнение баланса</h3>
+    
+    <div class="step">
+        <p>Для использования OpenRouter вам нужно пополнить баланс.</p>
+        <p>Минимальная сумма пополнения обычно составляет $5-10.</p>
+        <p>Цены на модели:</p>
+        <ul>
+            <li><strong>anthropic/claude-sonnet-4.6</strong> - $0.015/1K токенов</li>
+            <li><strong>openai/gpt-4.1</strong> - $0.020/1K токенов</li>
+            <li><strong>google/gemini-2.5-pro-preview</strong> - $0.018/1K токенов</li>
+        </ul>
+    </div>
+    
+    <h2>Настройка конфигурационного файла</h2>
+    
+    <h3>Шаг 1: Откройте конфигурационный файл</h3>
+    
+    <div class="code">
+        sudo nano /etc/ouroboros/config.json
+    </div>
+    
+    <h3>Шаг 2: Вставьте API ключи</h3>
+    
+    <div class="step">
+        <p>Найдите следующие поля и вставьте полученные ключи:</p>
+        <pre><code>{
+    "telegram_bot_token": "123456789:ABCdefGHIjklMNOPQRstUVwxyz_123456",
+    "openrouter_api_key": "sk-1234567890abcdefghijklmnopqrstuv",
+    "model": "anthropic/claude-sonnet-4.6",
+    "budget_usd": 10.0,
+    "log_level": "INFO",
+    "state_path": "/var/lib/ouroboros/",
+    "log_path": "/var/log/ouroboros/"
+}</code></pre>
+        
+        <p>Сохраните файл и закройте редактор.</p>
+    </div>
+    
+    <h3>Шаг 3: Проверьте права доступа</h3>
+    
+    <div class="code">
+        sudo chown ouroboros:ouroboros /etc/ouroboros/config.json
+        sudo chmod 600 /etc/ouroboros/config.json
+    </div>
+    
+    <h2>Тестирование API подключения</h2>
+    
+    <h3>Тестирование Telegram</h3>
+    
+    <div class="step">
+        <p>После настройки конфигурации перезапустите сервис:</p>
+        <div class="code">
+            sudo systemctl restart ouroboros
+        </div>
+        <p>Отправьте боту сообщение "/start" - он должен ответить.</p>
+    </div>
+    
+    <h3>Тестирование OpenRouter</h3>
+    
+    <div class="step">
+        <p>Проверьте логи сервиса:</p>
+        <div class="code">
+            sudo journalctl -u ouroboros -f
+        </div>
+        <p>Ищите сообщения о подключении к LLM моделям.</p>
+    </div>
+    
+    <h2>Безопасность</h2>
+    
+    <h3>Важные замечания</h3>
+    
+    <div class="warning">
+        <h4>Никогда не публикуйте API ключи</h4>
+        <ul>
+            <li>Не коммитьте их в репозиторий</li>
+            <li>Не отправляйте в сообщения</li>
+            <li>Храните в безопасном месте</li>
+        </ul>
+    </div>
+    
+    <div class="note">
+        <h4>Рекомендации по безопасности</h4>
+        <ul>
+            <li>Используйте разные ключи для разных сервисов</li>
+            <li>Регулярно меняйте ключи</li>
+            <li>Ограничьте доступ к конфигурационному файлу</li>
+            <li>Мониторьте расходы на API</li>
+        </ul>
+    </div>
+    
+    <h2>Устранение проблем</h2>
+    
+    <h3>Проблема: Telegram не отвечает</h3>
+    
+    <div class="step">
+        <ol>
+            <li>Проверьте токен в <code>/etc/ouroboros/config.json</code></li>
+            <li>Перезапустите сервис: <code>sudo systemctl restart ouroboros</code></li>
+            <li>Проверьте логи: <code>sudo journalctl -u ouroboros -f</code></li>
+            <li>Убедитесь, что бот активен в Telegram</li>
+        </ol>
+    </div>
+    
+    <h3>Проблема: Ошибка LLM модели</h3>
+    
+    <div class="step">
+        <ol>
+            <li>Проверьте API ключ OpenRouter</li>
+            <li>Убедитесь, что баланс положительный</li>
+            <li>Проверьте доступность модели</li>
+            <li>Проверьте логи на ошибки подключения</li>
+        </ol>
+    </div>
+    
+    <h2>Следующие шаги</h2>
+    
+    <div class="step">
+        <h4>После настройки API:</h4>
+        <ol>
+            <li>Перезапустите сервис: <code>sudo systemctl restart ouroboros</code></li>
+            <li>Проверьте статус: <code>sudo systemctl status ouroboros</code></li>
+            <li>Проверьте логи: <code>sudo journalctl -u ouroboros -f</code></li>
+            <li>Отправьте боту сообщение "/status" для проверки</li>
+        </ol>
+    </div>
+    
+    <h2>FAQ</h2>
+    
+    <h3>Вопрос: Можно ли использовать другие LLM провайдеры?</h3>
+    <p>Да, Ouroboros поддерживает различных провайдеров. Измените конфигурацию:</p>
+    <pre><code>{
+    "model": "openai/gpt-4.1",
+    "openai_api_key": "your_openai_key"
+}</code></pre>
+    
+    <h3>Вопрос: Как изменить бюджет?</h3>
+    <p>Измените поле "budget_usd" в конфигурации:</p>
+    <pre><code>{
+    "budget_usd": 20.0
+}</code></pre>
+    
+    <h3>Вопрос: Как мониторить расходы?</h3>
+    <p>Ouroboros автоматически отслеживает расходы и предупреждает при достижении лимита.</p>
+</body>
+</html>
