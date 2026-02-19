@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Linux Setup Guide - Ouroboros</title>
+    <meta name="description" content="Complete guide to installing Ouroboros on Linux">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+        
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        code {
+            background: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 1em 0;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 1em 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Linux Setup Guide - Ouroboros</h1>
+
+<p><strong>Version:</strong> 1.0</p>
+
+<p>Complete guide to installing Ouroboros on Linux systems. This guide covers Ubuntu/Debian-based distributions.</p>
+
+<h2>Prerequisites</h2>
+
+<ul>
+    <li><strong>Ubuntu 20.04+ / Debian 11+</strong> or compatible Linux distribution</li>
+    <li><strong>Python 3.9+</strong> (recommended: 3.11+)</li>
+    <li><strong>Git</strong> for cloning the repository</li>
+    <li><strong>Telegram Bot Token</strong> (from BotFather)</li>
+    <li><strong>OpenRouter API Key</strong> (or other LLM provider)</li>
+</ul>
+
+<h2>Installation Steps</h2>
+
+<h3>Step 1: Install Dependencies</h3>
+
+<pre><code># Update package list
+sudo apt update
+
+# Install Python 3.11 (if not already installed)
+sudo apt install -y python3.11 python3.11-venv python3.11-dev
+
+# Install Git
+sudo apt install -y git
+
+# Install build tools (for Python packages)
+sudo apt install -y build-essential
+
+# Install Python package manager (uv)
+sudo apt install -y curl
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Add uv to PATH
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+</code></pre>
+
+<h3 class="step">Step 2: Create Project Directory</h3>
+
+<pre><code># Create project directory
+mkdir -p ~/.ouroboros
+cd ~/.ouroboros
+</code></pre>
+
+<h3 class="step">Step 3: Clone Repository</h3>
+
+<pre><code># Clone Ouroboros repository
+git clone https://github.com/your-username/ouroboros.git .
+
+# Create virtual environment
+uv venv
+
+# Activate virtual environment
+source .venv/bin/activate
+
+# Install dependencies
+uv pip install -e .
+</code></pre>
+
+<h3 class="step">Step 4: Configure Environment</h3>
+
+<pre><code># Create environment configuration
+cp config_example.env .env
+
+# Edit .env file with your API keys
+nano .env
+</code></pre>
+
+<p>Edit the .env file with your configuration:</p>
+
+<pre><code># Required
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+
+# Optional
+TOTAL_BUDGET=10.0
+OUROBOROS_MODEL=anthropic/claude-sonnet-4.6
+OUROBOROS_MODEL_CODE=anthropic/claude-3-5-sonnet-20241022
+OUROBOROS_MODEL_LIGHT=anthropic/claude-3-haiku-20240307
+</code></pre>
+
+<h3 class="step">Step 5: Initialize State</h3>
+
+<pre><code># Initialize Ouroboros state
+python -c "from supervisor.state import init_state; init_state()"
+</code></pre>
+
+<h3 class="step">Step 6: Test Installation</h3>
+
+<pre><code># Test basic functionality
+python -c "from ouroboros.agent import Agent; agent = Agent(); print('Ouroboros agent created successfully')"
+
+# Test memory system
+python -c "from ouroboros.memory import Memory; memory = Memory(pathlib.Path('~/.ouroboros')); memory.ensure_files(); print('Memory system initialized')"
+</code></pre>
+
+<h2>Configuration Files</h2>
+
+<h3>config_example.env</h3>
+
+<pre><code># Environment configuration example
+# Copy this to .env and edit with your values
+
+# OpenRouter API Key (required)
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+
+# Telegram Bot Token (required)
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+
+# Total budget in USD (optional, default: 10.0)
+TOTAL_BUDGET=10.0
+
+# LLM model configurations (optional)
+OUROBOROS_MODEL=anthropic/claude-sonnet-4.6
+OUROBOROS_MODEL_CODE=anthropic/claude-3-5-sonnet-20241022
+OUROBOROS_MODEL_LIGHT=anthropic/claude-3-haiku-20240307
+
+# Background consciousness settings (optional)
+BACKGROUND_CONSCIOUSNESS_ENABLED=true
+BACKGROUND_WAKEUP_INTERVAL=300
+</code></pre>
+
+<h2>Running Ouroboros</h2>
+
+<h3>Interactive Mode</h3>
+
+<pre><code># Activate virtual environment
+source ~/.ouroboros/.venv/bin/activate
+
+# Start Ouroboros in interactive mode
+python -m ouroboros.agent
+</code></pre>
+
+<h3>Background Mode</h3>
+
+<pre><code># Start Ouroboros in background mode
+nohup python -m ouroboros.agent --background > ouroboros.log 2>&1 &amp;
+
+# Check status
+ps aux | grep ouroboros
+
+# View logs
+tail -f ouroboros.log
+</code></pre>
+
+<h3>Systemd Service</h3>
+
+<pre><code># Create systemd service file
+sudo nano /etc/systemd/system/ouroboros.service
+</code></pre>
+
+<p>Add the following content:</p>
+
+<pre><code>[Unit]
+Description=Ouroboros AI Agent
+After=network.target
+
+[Service]
+Type=simple
+User=your_username
+WorkingDirectory=/home/your_username/.ouroboros
+Environment=PATH=/home/your_username/.ouroboros/.venv/bin
+ExecStart=/home/your_username/.ouroboros/.venv/bin/python -m ouroboros.agent --background
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<pre><code># Enable and start service
+sudo systemctl enable ouroboros
+sudo systemctl start ouroboros
+
+# Check status
+sudo systemctl status ouroboros
+</code></pre>
+
+<h2>Directory Structure</h2>
+
+<pre><code>~/.ouroboros/
+├── .env                    # Environment configuration
+├── .venv/                  # Python virtual environment
+├── ouroboros/             # Main source code
+├── memory/                # Persistent memory
+│   ├── scratchpad.md     # Working memory
+│   ├── identity.md       # Manifesto
+│   ├── scratchpad_journal.jsonl  # Memory journal
+│   └── dialogue_summary.md  # Dialogue summary
+├── logs/                  # Log files
+│   ├── chat.jsonl        # Chat history
+│   ├── progress.jsonl     # Progress messages
+│   ├── tools.jsonl        # Tool usage
+│   ├── events.jsonl       # System events
+│   └── supervisor.jsonl   # Supervisor events
+├── state/                 # State management
+│   ├── state.json        # Current state
+│   ├── state.last_good.json  # Last good state
+│   └── queue_snapshot.json  # Task queue snapshot
+└── locks/                 # File locks
+    └── state.lock        # State lock file
+</code></pre>
+
+<h2>Configuration Options</h2>
+
+<h3>Environment Variables</h3>
+
+<ul>
+    <li><code>OPENROUTER_API_KEY</code>: Required - OpenRouter API key</li>
+    <li><code>TELEGRAM_BOT_TOKEN</code>: Required - Telegram bot token</li>
+    <li><code>TOTAL_BUDGET</code>: Optional - Total budget in USD (default: 10.0)</li>
+    <li><code>OUROBOROS_MODEL</code>: Optional - Primary LLM model (default: anthropic/claude-sonnet-4.6)</li>
+    <li><code>OUROBOROS_MODEL_CODE</code>: Optional - Code-focused model</li>
+    <li><code>OUROBOROS_MODEL_LIGHT</code>: Optional - Light model for simple tasks</li>
+</ul>
+
+<h3>Command Line Options</h3>
+
+<pre><code>python -m ouroboros.agent --help
+</code></pre>
+
+<p>Available options:</p>
+
+<ul>
+    <li><code>--background</code>: Run in background consciousness mode</li>
+    <li><code>--no-background</code>: Run only in interactive mode</li>
+    <li><code>--debug</code>: Enable debug logging</li>
+    <li><code>--config</code>: Specify custom config file path</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<h3>Common Issues</h3>
+
+<h4>Permission Denied</h4>
+
+<pre><code>sudo chown -R $USER:$USER ~/.ouroboros
+</code></pre>
+
+<h4>Missing Dependencies</h4>
+
+<pre><code>uv pip install -e .
+</code></pre>
+
+<h4>API Key Issues</h4>
+
+<pre><code># Verify API keys are set
+echo $OPENROUTER_API_KEY
+echo $TELEGRAM_BOT_TOKEN
+
+# Check connectivity
+curl -s https://openrouter.ai/api/v1/auth/key | jq
+</code></pre>
+
+<h3>Logs</h3>
+
+<pre><code># Check system logs
+tail -f ~/.ouroboros/logs/events.jsonl
+
+# Check supervisor logs
+tail -f ~/.ouroboros/logs/supervisor.jsonl
+</code></pre>
+
+<h2>Security Considerations</h2>
+
+<ul>
+    <li>Keep your API keys secure and never commit them to version control</li>
+    <li>Set appropriate file permissions on ~/.ouroboros directory</li>
+    <li>Regularly monitor usage and budget</li>
+    <li>Consider using a dedicated user account for running Ouroboros</li>
+</ul>
+
+<h2>Next Steps</h2>
+
+<ol>
+    <li>Configure your Telegram bot and start a conversation</li>
+    <li>Explore the knowledge base in ~/.ouroboros/memory/knowledge/</li>
+    <li>Customize your identity in ~/.ouroboros/memory/identity.md</li>
+    <li>Set up automatic backups of your memory files</li>
+</ol>
+
+<hr>
+
+<p><em>Need help? Check the <a href="https://github.com/your-username/ouroboros/issues">GitHub issues</a> or join our community.</em></p>
+
+</body>
+</html>
