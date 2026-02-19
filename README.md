@@ -37,7 +37,10 @@ sudo python3 install_complete.py
 ├── venv/                    # Виртуальное окружение
 ├── requirements.txt         # Зависимости
 ├── config.json             # Конфигурация
-└── install_complete.py      # Скрипт установки
+├── install_complete.py      # Скрипт установки
+├── check_server_health.py   # Скрипт проверки
+├── README.md               # Документация
+└── VERSION                 # Версия (6.2.0)
 
 /etc/ouroboros/                    # Конфигурация
 ├── config.json             # Конфигурация с API ключами
@@ -58,7 +61,7 @@ sudo python3 install_complete.py
 ### Вариант 1: Полная автоматическая установка
 
 ```bash
-# Склонируй репозиторий
+# Склонируйте репозиторий
 git clone git@github.com:groove52/ouroboros.git
 
 # Запустите скрипт установки
@@ -192,13 +195,13 @@ sudo systemctl disable ouroboros
 ### Проверка здоровья
 
 ```bash
-# Проверить установку
+# Проверьте установку
 sudo python3 check_server_health.py
 
-# Проверить конфигурацию
+# Проверьте конфигурацию
 sudo ls -la /etc/ouroboros/
 
-# Проверить права доступа
+# Проверьте права доступа
 sudo ls -la /opt/ouroboros/ | head -10
 ```
 
